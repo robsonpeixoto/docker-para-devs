@@ -287,7 +287,8 @@ datetime.datetime(2017, 11, 27, 3, 11, 58, 637834)
 
 ---
 
-# Desafio 1 - Fazer o hello world em Python
+# Desafio 1
+# Fazer o hello world em Python
 
 ---
 
@@ -309,7 +310,8 @@ CMD ["python3", "hello.py"]
 
 ---
 
-# Desafio 2 - Fazer o loop infinito em Python
+# Desafio 2
+# Fazer o loop infinito em Python
 
 ---
 
@@ -340,3 +342,127 @@ CMD ["python3", "loop.py"]
 ``` 
 
 ---
+
+# Conhecendo o Flask
+
+Crie o arquivo `requirements.txt`
+
+```
+flask
+```
+
+Crie `api.py`
+
+```
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+```
+
+---
+
+# Desafio 3
+# Rodar essa aplicação escrita em Flask
+
+---
+
+# Conhecendo o Flask - parte 2
+
+Crie o `Dockerfile`
+
+```
+FROM python:3
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python", "api.py"]
+```
+
+Depois execute `docker build -t uefs/fbta:005 .` para criar a imagem
+
+---
+
+# Desafio 3.1
+# Acessar a aplicação
+
+--- 
+
+# Conhecendo o Flask - parte 3
+
+```
+$ docker run -d -p 5000:5000 uefs/fbta:005
+b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
+
+$ curl localhost:5000
+Hello World!
+
+$ docker ps
+CONTAINER ID  IMAGE          COMMAND          PORTS                    NAMES
+efaadfad53bc  uefs/fbta:005  "python api.py"  0.0.0.0:5000->5000/tcp   jolly_pasteur
+
+$ docker rm --force b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
+b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
+```
+
+---
+
+# Desafio 3.2 
+# Mude a mensagem e veja a nova mensagem
+
+## O que aconteceu?
+
+---
+
+# Desafio 3.3
+# Deixe o build mais rápido
+
+---
+
+# Deixe o build mais rápido
+
+Mude o `Dockerfile` para:
+
+```
+FROM python:3
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "api.py"]
+```
+
+Rode o build(`docker build -t uefs/fbta:006 .`) e veja o que acontece
+
+---
+
+# Docker cache
+
+```
+$ docker build -t uefs/fbta:006 .
+Sending build context to Docker daemon  4.096kB
+Step 1/6 : FROM python:3
+ ---> 79e1dc9af1c1
+Step 2/6 : WORKDIR /app
+ ---> Using cache
+ ---> 8ae6ae199c9c
+Step 3/6 : COPY requirements.txt .
+ ---> Using cache
+ ---> 7c35f7de84d3
+Step 4/6 : RUN pip install -r requirements.txt
+ ---> Using cache
+ ---> 311e80a05ee3
+Step 5/6 : COPY . .
+ ---> 0c012bdbd591
+Step 6/6 : CMD python api.py
+ ---> Running in 06ffb420c1f8
+ ---> 4a1d298cbdaf
+Removing intermediate container 06ffb420c1f8
+Successfully built 4a1d298cbdaf
+Successfully tagged uefs/fbta:006
+```
