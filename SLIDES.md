@@ -200,9 +200,59 @@ $ docker rm 4a53c0deae0b
 $ docker rm 096e732d91b2
 ```
 
+---
+
+# Me mostra alguma coisa útil ...
+
+Agora vamos criar uma simples aplicação em Python que:
+
+* cria e lista usuários
+* manda email quando o usuário é criado
 
 ---
 
-```python
->>> print("oi")
+# Python 101
+
 ```
+$ docker run -it python:3
+Python 3.6.3 (default, Nov  4 2017, 22:17:09)
+[GCC 4.9.2] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> print('oi')
+oi
+
+>>> print("oi")
+oi
+```
+
+---
+
+# Python 101 - parte 2
+
+```
+>>> def soma(x, y):
+...     return x + y
+...
+
+>>> soma(1,2)
+3
+```
+
+---
+
+# Python 101 - parte 3
+
+```
+>>> lista = [1,2,3,4]
+>>> for item in lista:
+...     print(item, item + 1)
+...
+1 2
+2 3
+3 4
+4 5
+```
+
+---
+
