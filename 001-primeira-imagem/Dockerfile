@@ -1,0 +1,3 @@
+FROM ubuntu
+
+CMD ["printf", "FÓRUM BAIANO DE TECNOLOGIAS ABERTAS\n"]
