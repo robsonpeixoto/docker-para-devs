@@ -256,3 +256,86 @@ oi
 
 ---
 
+# Python 101 - parte 4
+
+```
+>>> i = 0
+>>> while i < 5:
+...     print(i)
+...     i = i + 1
+...
+0
+1
+2
+3
+4
+```
+
+----
+
+# Python 101 - parte 5
+
+```
+>>> import datetime
+
+>>> datetime.datetime.now()
+datetime.datetime(2017, 11, 27, 3, 11, 58, 637834)
+
+>>> str(datetime.datetime.now())
+'2017-11-27 03:12:03.517113'
+```
+
+---
+
+# Desafio 1 - Fazer o hello world em Python
+
+---
+
+# Python - Hello world
+
+
+Crie o arquivo `hello.py`
+```
+print("FÓRUM BAIANO DE TECNOLOGIAS ABERTAS")
+```
+
+Crie o arquivo `Dockerfile`
+```
+FROM python:3
+WORKDIR /app
+COPY hello.py .
+CMD ["python3", "hello.py"]
+```
+
+---
+
+# Desafio 2 - Fazer o loop infinito em Python
+
+---
+
+# Loop infinito em Python
+
+Crie o arquivo `loop.py`
+
+```
+import datetime
+import time
+
+while True:
+    print(datetime.datetime.now(), "TOU VIVO")
+    time.sleep(1)
+```
+
+---
+# Loop infinito em Python - parte 2
+
+Crie o arquivo `Dockerfile`
+
+```
+FROM python:3
+WORKDIR /app
+COPY loop.py .
+CMD ["python3", "loop.py"]
+``` 
+
+---
