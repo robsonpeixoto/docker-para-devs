@@ -18,6 +18,26 @@
 
 ---
 
+# Instalando Docker
+
+- Docker Nativo
+- Docker for Windows ou Mac
+
+---
+
+# Criando uma Docker ID
+
+- https://hub.docker.com/
+
+---
+
+# Play with Docker
+
+- https://labs.play-with-docker.com/
+- http://training.play-with-docker.com/
+
+---
+
 # Hello world
 
 ```
