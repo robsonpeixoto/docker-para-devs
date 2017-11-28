@@ -42,7 +42,7 @@ slidenumbers: true
 # Hello world
 
 ```
-$ docker run hello-world
+$ docker container run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
 ca4f61b1923c: Pull complete
@@ -58,7 +58,7 @@ This message shows that your installation appears to be working correctly.
 ---
 
 ```
-$ docker run -it ubuntu bash
+$ docker container run -it ubuntu bash
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 660c48dd555d: Pull complete
@@ -89,14 +89,14 @@ CMD ["printf", "FÓRUM BAIANO DE TECNOLOGIAS ABERTAS\n"]
 ```
 
 E execute o comando:
-`$ docker build -t  uefs/fbta:001 .`
+`$ docker image build -t  uefs/fbta:001 .`
 
 ---
 
 # E agora vamos criar um container
 
 ```
-$ docker run  uefs/fbta:001
+$ docker container run  uefs/fbta:001
 FÓRUM BAIANO DE TECNOLOGIAS ABERTAS
 ```
 
@@ -148,7 +148,7 @@ CMD ["sh", "loop.sh"]
 # Loop infinito - criando a imagem
 
 ```
-$ docker build -t  uefs/fbta:002 .
+$ docker image build -t  uefs/fbta:002 .
 Sending build context to Docker daemon  3.072kB
 Step 1/4 : FROM ubuntu
  ---> 20c44cd7596f
@@ -170,7 +170,7 @@ Successfully tagged  uefs/fbta:002
 # Loop infinito - rodando...
 
 ```
-$ docker run  uefs/fbta:002
+$ docker container run  uefs/fbta:002
 Mon Nov 27 02:21:56 UTC 2017 => TOU VIVO
 Mon Nov 27 02:21:57 UTC 2017 => TOU VIVO
 Mon Nov 27 02:21:58 UTC 2017 => TOU VIVO
@@ -184,7 +184,7 @@ Mon Nov 27 02:22:00 UTC 2017 => TOU VIVO
 # Loop infinito - em background ...
 
 ```
-$ docker run -d  uefs/fbta:002
+$ docker container run -d  uefs/fbta:002
 44d1c36f7faa2ade4317430bad0ae544ad20248ffc2a57f8797cb80a1a4aa6ea
 
 $ docker ps
@@ -217,8 +217,8 @@ CONTAINER ID  IMAGE          COMMAND                  CREATED          STATUS   
 # Limpando a casa
 
 ```
-$ docker rm 4a53c0deae0b
-$ docker rm 096e732d91b2
+$ docker container rm 4a53c0deae0b
+$ docker container rm 096e732d91b2
 ```
 
 ---
@@ -227,15 +227,15 @@ $ docker rm 096e732d91b2
 
 Agora vamos criar uma simples aplicação em Python que:
 
-* cria e lista usuários
-* manda email quando o usuário é criado
+* cadastra livros
+* recupera um livro cadastrado
 
 ---
 
 # Python 101
 
 ```
-$ docker run -it python:3
+$ docker container run -it python:3
 Python 3.6.3 (default, Nov  4 2017, 22:17:09)
 [GCC 4.9.2] on linux
 Type "help", "copyright", "credits" or "license" for more information.
@@ -405,7 +405,7 @@ RUN pip install -r requirements.txt
 CMD ["python", "api.py"]
 ```
 
-Depois execute `docker build -t uefs/fbta:005 .` para criar a imagem
+Depois execute `docker image build -t uefs/fbta:005 .` para criar a imagem
 
 ---
 
@@ -417,7 +417,7 @@ Depois execute `docker build -t uefs/fbta:005 .` para criar a imagem
 # Conhecendo o Flask - parte 3
 
 ```
-$ docker run -d -p 5000:5000 uefs/fbta:005
+$ docker container run -d -p 5000:5000 uefs/fbta:005
 b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
 
 $ curl localhost:5000
@@ -427,7 +427,7 @@ $ docker ps
 CONTAINER ID  IMAGE          COMMAND          PORTS                    NAMES
 efaadfad53bc  uefs/fbta:005  "python api.py"  0.0.0.0:5000->5000/tcp   jolly_pasteur
 
-$ docker rm --force b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
+$ docker container rm --force b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
 b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
 ```
 
@@ -458,14 +458,14 @@ COPY . .
 CMD ["python", "api.py"]
 ```
 
-Rode o build(`docker build -t uefs/fbta:006 .`) e veja o que acontece
+Rode o build(`docker image build -t uefs/fbta:006 .`) e veja o que acontece
 
 ---
 
 # Docker cache
 
 ```
-$ docker build -t uefs/fbta:006 .
+$ docker image build -t uefs/fbta:006 .
 Sending build context to Docker daemon  4.096kB
 Step 1/6 : FROM python:3
  ---> 79e1dc9af1c1
