@@ -1,3 +1,4 @@
+slidenumbers: true
 # Desenvolva usando Docker
 
 ---
@@ -486,3 +487,235 @@ Removing intermediate container 06ffb420c1f8
 Successfully built 4a1d298cbdaf
 Successfully tagged uefs/fbta:006
 ```
+
+---
+
+# Desafio 4
+
+## Queremos uma API REST, retorne um JSON
+
+---
+
+ Mude a `api.py` para:
+```
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
+```
+
+---
+
+# Isso já tá ficando chato ...
+
+--- 
+
+# Docker Compose
+
+Crie o arquivo  `docker-compose.yml`
+
+```
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+    - "5000:5000"
+```
+
+E rode o comando `docker-compose up --build`.
+
+---
+
+# Desafio 5
+
+## Mude a mensagem que está no JSON
+
+---
+
+# Não tem como deixar menos chato?
+
+## Depente!!!
+
+---
+
+# Volumes!
+
+Modifique o arquivo `docker-compose.yml`
+
+```
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+    - "5000:5000"
+    volumes:
+    - ".:/app"
+```
+
+Modifique o `app.run` do `api.py`  para:
+
+```
+app.run(host='0.0.0.0', port=5000, debug=True)
+```
+
+---
+
+# Desafio 6
+
+## Modifique o código e veja como o Docker é lindo
+
+---
+
+# API Rest - Cadastrando livros
+
+- O que precisamos para cadastrar um livro?
+- Como criar uma simples API Rest?
+- Como levantar um banco de dados ?
+
+---
+
+# Desafio 7
+
+## Suba um mongodb usando o docker compose
+
+---
+
+# Desafio 8
+
+## Se conecte ao banco mongo
+
+---
+
+# Desafio 9
+
+## Repita, bem rápido, 10 vezes a frase abaixo:
+# O padre pouca capa tem, porque pouca capa compra.
+
+---
+
+# Cadastrando um novo livro
+
+Adicione o mongo no `requirements.txt`
+
+```
+flask
+Flask-PyMongo
+```
+
+---
+
+# Cadastrando um novo livro - parte 2
+
+E o mongo no `docker-compose.yml`
+
+```
+version: '3'
+services:
+  api:
+    build: .
+    ports:
+    - "5000:5000"
+    volumes:
+    - ".:/app"
+  mongo:
+    image: mongo
+```
+
+--- 
+
+# Cadastrando um novo livro - parte 3
+
+Modifique o código do `api.py` para
+
+```
+from flask import Flask, jsonify, request
+from flask_pymongo import PyMongo
+
+app = Flask(__name__)
+app.config['MONGO_HOST'] = 'mongo'
+app.config['MONGO_DBNAME'] = 'fbta'
+mongo = PyMongo(app)
+
+@app.route("/", methods=['POST'])
+def cadastrar():
+    livro = request.json
+    resultado = mongo.db.livros.insert_one(livro)
+    livro['id'] = str(livro['_id'])
+    del livro['_id']
+    return jsonify(livro)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True)
+```
+
+---
+
+# Cadastrando um novo livro - parte 4
+
+Agora teste rodando o comando abaixo em outro terminal:
+
+```
+curl 'http://localhost:5000' \
+  -H 'Content-Type: application/json' \
+  -X POST \
+  -d '{"titulo": "docker para desenvolvedores", "autor": "Rafael Gomes"}'
+```
+
+---
+
+# Desafio 10
+
+## Recupere o livro quando o usuário acessar a URL `/<codigo-do-livro>`
+
+---
+
+# Recuperando o livro 
+
+Adicione ao `api.py` a função abaixo:
+
+```
+from flask_pymongo import PyMongo, ObjectId
+
+@app.route("/<codigo>", methods=['GET'])
+def recuperar(codigo):
+    livro = mongo.db.livros.find_one({'_id': ObjectId(codigo)})
+    livro['id'] = str(livro['_id'])
+    del livro['_id']
+    return jsonify(livro)
+```
+
+E test com o comando `curl localhost:5000/5a1cc89736e48d005e4626e1`
+
+---
+
+# Desafio 11
+
+## Crie uma simples rota `/sorteio` para sortear o livro Docker para Desenvolvedores
+
+---
+
+# Sorteio
+
+Adicione ao `api.py` a função abaixo:
+
+```
+import random
+
+@app.route("/sorteio")
+def sorteio():
+    alunos = ['A', 'B', 'C']
+    escolhido = random.choice(alunos)
+    return jsonify(escolhido)
+```
+
+
+---
+
+# Perguntas?
