@@ -6,7 +6,12 @@ slidenumbers: true
 # Quem somos?
 
 - Robinho, vulgo Robson Peixoto
+ - http://twitter.com/robinhopeixoto
+ - http://github.com/robsonpeixoto
 - Gomex, vulgo Rafael Gomes
+ - http://twitter.com/gomex
+ - http://github.com/gomex
+ - http://gomex.me/
 
 ---
 
@@ -16,6 +21,11 @@ slidenumbers: true
 - Padroniza a execução de software através dos containers
 - Funciona em Windows, Linux e Mac
 - Permite que tudo seja facilmente versionável
+
+---
+
+![](./assets/vm.png)
+
 
 ---
 
@@ -57,6 +67,8 @@ This message shows that your installation appears to be working correctly.
 
 ---
 
+# Camadas
+
 ```
 $ docker container run -it ubuntu bash
 Unable to find image 'ubuntu:latest' locally
@@ -66,9 +78,17 @@ latest: Pulling from library/ubuntu
 421e436b5f80: Pull complete
 e4ce6c3651b3: Pull complete
 be588e74bd34: Pull complete
-Digest: sha256:7c67a2206d3c04703e5c23518707bdd4916c057562dd51c74b99b2ba26af0f79
-Status: Downloaded newer image for ubuntu:latest
+Digest: sha256:7c67a2206d3c04
+...
+```
 
+![right fit](./assets/layers.jpg)
+
+---
+
+# Isolamento
+
+```
 root@da72ee310354:/# ps aux
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root         1  0.0  0.1  18240  3272 pts/0    Ss   21:17   0:00 bash
@@ -83,12 +103,14 @@ exit
 # Primeira Imagem
 
 Crie o arquivo `Dockerfile` com o conteúdo:
-```Dockerfile
+
+```
 FROM ubuntu
 CMD ["printf", "FÓRUM BAIANO DE TECNOLOGIAS ABERTAS\n"]
 ```
 
 E execute o comando:
+
 `$ docker image build -t  uefs/fbta:001 .`
 
 ---
@@ -122,6 +144,7 @@ CONTAINER ID  IMAGE         COMMAND                 CREATED        STATUS       
 # Loop infinito!
 
 Vamos criar o script `loop.sh`
+
 ```
 while true ; do
     AGORA="$(date)"
