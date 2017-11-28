@@ -127,14 +127,14 @@ FÓRUM BAIANO DE TECNOLOGIAS ABERTAS
 # Cadê esse container?
 
 ```
-$ docker ps
+$ docker container ls
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
 ## Morreu?
 
 ```
-$ docker ps -a
+$ docker container ls -a
 CONTAINER ID  IMAGE         COMMAND                 CREATED        STATUS                     PORTS  NAMES
 096e732d91b2  uefs/fbta:001 "printf 'FÓRUM BAI..."  6 seconds ago  Exited (0) 4 seconds ago          modest_golick
 ```
@@ -210,7 +210,7 @@ Mon Nov 27 02:22:00 UTC 2017 => TOU VIVO
 $ docker container run -d  uefs/fbta:002
 44d1c36f7faa2ade4317430bad0ae544ad20248ffc2a57f8797cb80a1a4aa6ea
 
-$ docker ps
+$ docker container ls
 CONTAINER ID   IMAGE                    COMMAND             CREATED             STATUS        
 44d1c36f7faa    uefs/fbta:002   "sh loop.sh"        18 seconds ago      Up 16 seconds 
 
@@ -226,10 +226,10 @@ Mon Nov 27 02:23:46 UTC 2017 => TOU VIVO
 # Loop infinito - mata logo!
 
 ```
-$ docker kill 44d1c36f7faa
+$ docker container kill 44d1c36f7faa
 44d1c36f7faa
 
-$ docker ps -a
+$ docker container ls -a
 CONTAINER ID  IMAGE          COMMAND                  CREATED          STATUS                       PORTS   NAMES
 4a53c0deae0b  uefs/fbta:002  "sh loop.sh"             9 seconds ago    Exited (137) 2 seconds ago           nostalgic_mirzakhani
 096e732d91b2  uefs/fbta:001  "printf 'FÓRUM BAI..."   15 seconds ago   Exited (0) 13 seconds ago            modest_golick
@@ -446,7 +446,7 @@ b690a907759db366ab9b8745830d84ced35e01f071fd90bddd6259d7a8a07c45
 $ curl localhost:5000
 Hello World!
 
-$ docker ps
+$ docker container ls
 CONTAINER ID  IMAGE          COMMAND          PORTS                    NAMES
 efaadfad53bc  uefs/fbta:005  "python api.py"  0.0.0.0:5000->5000/tcp   jolly_pasteur
 
