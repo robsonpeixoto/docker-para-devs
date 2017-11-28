@@ -21,6 +21,7 @@ slidenumbers: true
 - Padroniza a execução de software através dos containers
 - Funciona em Windows, Linux e Mac
 - Permite que tudo seja facilmente versionável
+- Permite compartilhamento de infraestrutura
 
 ---
 
@@ -105,7 +106,7 @@ exit
 Crie o arquivo `Dockerfile` com o conteúdo:
 
 ```
-FROM ubuntu
+FROM ubuntu:16.04
 CMD ["printf", "FÓRUM BAIANO DE TECNOLOGIAS ABERTAS\n"]
 ```
 
@@ -153,12 +154,14 @@ while true ; do
 done
 ```
 
+Lembre-se do **contexto**, então crie uma pasta para colocar esses arquivos.
+
 ---
 
 # Loop infinito - Dockerfile
 
 ```
-FROM ubuntu
+FROM ubuntu:16.04
 
 WORKDIR /app
 COPY loop.sh .
@@ -172,8 +175,9 @@ CMD ["sh", "loop.sh"]
 
 ```
 $ docker image build -t  uefs/fbta:002 .
+
 Sending build context to Docker daemon  3.072kB
-Step 1/4 : FROM ubuntu
+Step 1/4 : FROM ubuntu:16.04
  ---> 20c44cd7596f
 Step 2/4 : WORKDIR /app
  ---> f516fc326ed1
@@ -349,7 +353,7 @@ Crie o arquivo `Dockerfile`
 FROM python:3
 WORKDIR /app
 COPY hello.py .
-CMD ["python3", "hello.py"]
+CMD ["python3", "-u", "hello.py"]
 ```
 
 ---
@@ -382,7 +386,7 @@ Crie o arquivo `Dockerfile`
 FROM python:3
 WORKDIR /app
 COPY loop.py .
-CMD ["python3", "loop.py"]
+CMD ["python3", "-u", "loop.py"]
 ``` 
 
 ---
@@ -425,7 +429,7 @@ FROM python:3
 WORKDIR /app
 COPY . .
 RUN pip install -r requirements.txt
-CMD ["python", "api.py"]
+CMD ["python3", "-u", "api.py"]
 ```
 
 Depois execute `docker image build -t uefs/fbta:005 .` para criar a imagem
@@ -478,7 +482,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
-CMD ["python", "api.py"]
+CMD ["python3", "-u", "api.py"]
 ```
 
 Rode o build(`docker image build -t uefs/fbta:006 .`) e veja o que acontece
@@ -628,8 +632,8 @@ app.run(host='0.0.0.0', port=5000, debug=True)
 Adicione o mongo no `requirements.txt`
 
 ```
-flask
-Flask-PyMongo
+flask==0.12.2
+Flask-PyMongo==0.5.1
 ```
 
 ---

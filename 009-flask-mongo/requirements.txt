@@ -1,2 +1,2 @@
-flask
-Flask-PyMongo
+flask==0.12.2
+Flask-PyMongo==0.5.1

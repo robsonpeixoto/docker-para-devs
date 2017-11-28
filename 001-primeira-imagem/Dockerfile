@@ -1,3 +1,3 @@
-FROM ubuntu
+FROM ubuntu:16.04
 
 CMD ["printf", "FÓRUM BAIANO DE TECNOLOGIAS ABERTAS\n"]
